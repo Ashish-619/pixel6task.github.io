@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Confirm</title>
+    
+    <script>
+    var digits = "0123456789";
+    var otp = "";
+    for (let i = 0; i < 4; i++) otp += digits[Math.floor(Math.random() * 10)];
+    console.log(otp);
+
+     var pObj = document.getElementsByTagName("p");   //pObj is the object created for <p> tag.
+     var chance = 3;
+
+    function checkOTP() {
+      var n = document.getElementById("OTP").value;     //storing OTP in n.
+
+      if (n == otp && chance > 0) {
+        pObj[5].innerHTML = "Correct OTP!! Validation successfull ";  //printing the above msg in pObj[5], i.e into 5th <p> tag.
+        document.getElementById("btn").disabled = true;
+
+        alert("Validation Sucessful!! redirecting to :- Pixel6's website ");
+        window.location.href = "http://Pixel6.co";      //Redirects to Pixel6's website after succesfull validation.
+      } else {
+        chance--;
+        pObj[5].innerHTML = "Incorrect OTP, chances left = " + chance;  //printing the above msg in pObj[5], i.e into 5th <p> tag(Total there are 7 <P> tags).
+        document.getElementById("OTP").value = null;  // after entering incorrect OTP, the textfield will be made empty(to enter valid OTP again).
+        if (chance == 0) {
+          pObj[6].innerHTML = "Validation Failed!!";    //printing the above msg in pObj[6], i.e into 6th <p> tag(Total there are 7 <P> tags)
+          document.getElementById("btn").disabled = true; //Disabling the button after 3 failed transactions.
+
+          alert("Validation Failed!!");
+          window.location.href = "http://Pixel6isTheBest.co";  //Redirecting to 404 Page.
+        }
+      }
+    }
+  </script>
+</head>
+
+  <body>
+    <h1>Confirmation page.</h1>
+    <p></p>
+    <span id="nm">Dear, </span>
+    <script>
+      document.getElementById("nm").innerHTML += localStorage.getItem("textvalue1");  //Getting the input value from localStorage, which we saved in line no. 45 of index.html page)
+    </script>
+    <p id="em">
+      Thank you for your inquiry. A 4 digit verification code has been sent to
+      your email:
+    </p>
+    <p></p>
+    <script>
+      document.getElementById("em").innerHTML +=
+        localStorage.getItem("textvalue2") + ",";
+    </script>
+    <p>
+      please enter the code in the following box and submit for confirmation:"
+    </p>
+    <h3>Enter OTP</h3>
+
+    <input type="number" id="OTP"/><br /><br />
+    <button onclick="checkOTP();" id="btn">Validate</button>
+
+    <p></p>
+    <p></p>
+    <p></p>
+    
+  </body>
+</html>

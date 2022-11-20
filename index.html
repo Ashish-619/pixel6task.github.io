@@ -1,0 +1,115 @@
+<html>
+<html lang="en">
+  <head>
+
+    <title>Loan Application</title>
+    <h2>Loan Application</h2>
+    <style>
+      input:invalid {
+        border: red solid 3px;
+      }
+      input:valid {
+        border: greenyellow solid 3px;
+      }
+
+      form {
+        font-family: "Lucida Sans";
+      }
+
+      h2 {
+        border: 3px;
+        border-color: rgb(55, 124, 252);
+        border-style: solid;
+        display: inline-block;
+      }
+    </style>
+    <script>
+
+      //function to calculate EMI.
+      function calculateEMI() {
+        r = 8.5 / (12 * 100); // one month interest
+        t = 15 * 12; // one month period(i.e 180 months)
+
+        var p = document.getElementById("loanAmount").value;
+        document.getElementById("showEMI").value = Math.floor(
+          (p * r * Math.pow(1 + r, t)) / (Math.pow(1 + r, t) - 1)  //formula to calculate EMI.
+        );
+      }
+
+
+      //function to get the values which we give as input in textfields and saving them in localstorage to access it later.
+      function callValue() {
+        var firstName = document.getElementById("fname").value;
+        var getEmail = document.getElementById("email").value;
+
+        localStorage.setItem("textvalue1", firstName); //textvalue1 is the key, and firstname is the value.
+        localStorage.setItem("textvalue2", getEmail);
+      }
+    </script>
+  </head>
+
+  <body>
+    <form method="get" action="confirm.html">
+    <!-- 
+      1. pattern="[A-Za-z]{4,} indicates text field should have characters ranging between A-Z(capital), a-z(small) and the length of the word should be minimum 4 and can exceed. 
+      2. placeholder gives hint of what kind of input is expected.
+      3. required- tells, the input field is compuslory to be filled
+      4. title- will be shown whenever user doesn't give input as mentioned
+      5. If the input field is filled incorrectly, red border on the text box will be shown(otherwise Green ). (refer 'input:invalid' in css)
+    -->
+
+      Full Name <br /><input
+        type="text"
+        name="firstname"
+        id="fname"
+        pattern="[A-Za-z]{4,}"
+        placeholder="First Name"
+        required
+        title="First Name should have 1 word and must contain atleast 4 characters."
+      />
+
+      <input
+        type="text"
+        name="lastname"
+        pattern="[A-Za-z]{4,}"
+        placeholder="Last Name"
+        required
+        title="Last Name should have 1 word and must contain atleast 4 characters."
+      /><br /><br />
+
+      <!--  characters@characters.domain -->
+      Email <br /><input
+        type="text"
+        name="email"
+        id="email"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}"
+        title="Enter in this format 'characters@characters.domain'"
+        required
+      /><br /><br />
+
+      PAN Card <br /><input
+        type="text"
+        name="pan"
+        pattern="([A-Z]{5})([0-9]{4})([A-Z]{1})"
+        title="Format must be- 'ABCDE1234F'"
+        required
+      /><br /><br />
+
+      Loan Amount <br /><input
+        type="text"
+        name="loan"
+        id="loanAmount"
+        pattern="[0-9]{4,9}"
+        title="Loan amount should be Numeric and range between '1000 - 10,00,00,000' Rs"
+        required
+        onmouseout="calculateEMI();"
+      /><br /><br />
+
+      Estimated EMI <br />
+      <input type="text" name="showEMI" id="showEMI" required /><br /><br />
+
+      <input type="submit" value="Submit" onclick="callValue();" />
+   
+    </form>
+  </body>
+</html>
